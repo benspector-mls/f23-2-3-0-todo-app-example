@@ -4,9 +4,9 @@ This README documents my process for building this simple Todo App using Vite. U
 
 ## Why Vite?
 
-Vite is a tool for developing web applications. It works by creating a "development" version of your project and provides a server for previewing and testing that version. In this "development" mode you can quickly iterate on the project and see the application "hot reload" without having to restart the server. 
+Vite is a tool for developing web applications. It works by creating a **"development" version** of your project and provides a server for previewing and testing that version. In this "development" mode you can quickly iterate on the project and see the application **"hot reload"** without having to restart the server. 
 
-When it is time to deploy your project, it provides tools for "compiling" the project into a "production" version of the project that can easily be deployed on a third-party hosting service. For basic front-end only applications, we'll use Github Pages. Eventually we'll use a more robust hosting service like Render which can provide a full back-end server and a database server.
+When it is time to **deploy** your project, it provides tools for **"compiling"** the project into a **"production" version** of the project that can easily be deployed on a third-party hosting service. For basic front-end only applications, we'll use **Github Pages**. Eventually we'll use a more robust hosting service like Render which can provide a full back-end server and a database server.
 
 Vite can be used for both simple and complex projects, from front-end only applications that use nothing but Vanilla JS to robust full-stack applications using frameworks like React.
 
