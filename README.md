@@ -195,24 +195,30 @@ Now that I can manage the todos using `localStorage`, I can start building out t
 3. Then, I'll add functionality for deleting a todo
 4. Finally, I'll add a form for adding new todos
 
-To render each todo, I them to be in a list and each have this HTML structure:
+When rendering the todos, I want them to be in a list and each have this HTML structure:
 
 ```html
-<li data-uuid="123456789" class='todo-card'>
-  <h3>Todo title</h3>
-  <label>
-    Is Complete
-    <input type="checkbox" name="isComplete">
-  </label>
+<li data-uuid="5affd4e4-418d-4b62-beeb-1c0f7aaff753" class="todo-card">
+  <h3>Take out the trash</h3>
+  <div>
+    <label>
+      Complete
+      <input type="checkbox" name="isComplete" checked="">
+    </label>
+    <button class="delete-todo">🗑️</button>
+  </div>
 </li>
 ```
+
+Note how the `li` element has the `uuid` value of the todo as a `data-uuid` attribute! This will come in handy later when we want to delete / update specific todo items.
 
 To achieve this in an organized fashion, in `main.js` I'll create two new functions:
 
 ```js
+import { getAllTodos, initializeTodosIfEmpty, addTodo, toggleTodoComplete, deleteTodo } from './data-layer-utils';
+
 const renderTodoCard = (todo) => {
-  // creates a new li with the information from the todo
-  // appends it to the ul
+  // creates a new li with the structure above and appends it to the ul
 }
 
 const renderTodos = () => {
@@ -226,8 +232,127 @@ const main = () => {
 }
 ```
 
+Use `npm run dev` to preview the application, using the Chrome Developer Console to debug.
+
+At this point, you should see the todos displayed with the structure above and you can take some time to style them.
+
+## What's next?
+
+Okay! So our application can show todos fetched from `localStorage`. You can choose to implement each of the remaining features in whatever order you choose. 
+
+I'm going to work on creating todos next. That way, when I implement updating and deleting later, I can add new todos and then delete / update them afterwards without having to reset the `localStorage` to get the default todos back.
+
+> 💡 **tip**: You can reset `localStorage` with `localStorage.clear()`
+
+## Creating New Todos
+
+To make the simplest todo, we just need a form with a single text input for the title of the todo. 
+
+```html
+<form id="new-todo-form" aria-label="new-todo-form">
+  <div class="label-input-container">
+    <label for="todo-title">Title</label>
+    <input type="text" name="todoTitle" id="todo-title" required />
+  </div>
+  <button>Add</button>
+</form>
+```
+
+We can have new todos start as incomplete and we'll provide a `uuid`. Again, our todos should be Objects that look like this:
+
+```js
+{
+  uuid: "5affd4e4-418d-4b62-beeb-1c0f7aaff753",
+  title: "take out the trash",
+  isComplete: false
+}
+```
+
+We'll create these objects each time the form is submitted. We'll use the `addTodo` helper function we made in the `data-layer.utils.js` file:
+
+```js
+import { v4 as uuidv4 } from 'uuid';
+import { getAllTodos, initializeTodosIfEmpty, addTodo, toggleTodoComplete, deleteTodo } from './data-layer-utils';
+
+const renderTodoCard = (todo) => { /* ... */ };
+const renderTodos = () => { /* ... */ };
+
+const handleNewTodo = (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const newTodo = {
+    uuid: uuidv4(),
+    title: form.todoTitle.value,
+    isComplete: false
+  }
+  addTodo(newTodo);
+  renderTodos();
+
+  form.reset();
+};
+
+const main = () => {
+  initializeTodosIfEmpty();
+  renderTodos();
+
+  document.querySelector("form#new-todo-form").addEventListener('submit', handleNewTodo);
+};
+```
+
+Remember to re-render the todos using your `renderTodos` helper function after adding the new todo!
+
+## Deleting and Updating Todos
+
+To handle deleting and updating todos, we want to detect `input` change events on the checkboxes and `click` events on the delete buttons inside of each `li.todo-card`.
+
+To avoid creating a new event listener on each `li.todo-card`, we'll take advantage of propagation and create two delegation event handlers on the `ul#todos-list`, one for updating and one for deleting.
+
+```js
+import { v4 as uuidv4 } from 'uuid';
+import { getAllTodos, initializeTodosIfEmpty, addTodo, toggleTodoComplete, deleteTodo } from './data-layer-utils';
+
+const renderTodoCard = (todo) => { /* ... */ };
+const renderTodos = () => { /* ... */ };
+
+const handleNewTodo = (e) => { /* ... */ };
+
+// a delegation event handler for the checkbox inputs
+const handleTodoChange = (e) => {
+  if (!e.target.matches('input[type="checkbox"]')) return;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
+  toggleTodoComplete(uuid);
+  renderTodos();
+};
+
+// a delegation event handler for the delete buttons
+const handleDeleteTodo = (e) => {
+  if (!e.target.matches('button.delete-todo')) return;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
+  deleteTodo(uuid);
+  renderTodos();
+};
+
+const main = () => {
+  initializeTodosIfEmpty();
+  renderTodos();
+  document.querySelector("form#new-todo-form").addEventListener('submit', handleNewTodo);
+
+  // put the event handlers on the ul, not on the individual li elements.
+  document.querySelector("ul#todos-list").addEventListener('input', handleTodoChange);
+  document.querySelector("ul#todos-list").addEventListener('click', handleDeleteTodo);
+};
+```
+
+This is where having the `uuid` as a data attribute on each todo `li` comes in handy! Whenever a checkbox or button is clicked, we can check the `li` parent element and get the `dataset.uuid` value from it. Then, we can easily feed it to our data layer helper functions before re-rendering.
 
 ## Configure Vite for Deployment on Github Pages
+
+And that's it!!
+
+Do some final testing and styling on the development server and then we get get this thing published!
+
+Before we can publish the Github pages, we want to make the **production version** of the application. Before we do that, we'll need to configure Vite to create that version where we want it to.
 
 Create a Vite configuration file
 
@@ -244,6 +369,11 @@ export default defineConfig({
   // GitHub Pages expects an index.html in the root directory
   // so just run npm build before pushing to GitHub and this will rebuild our assets to the root
   build: { outDir: '..' },
+  // needed for github pages just put the repo name here
+  // For example, my repo is located at https://github.com/benspector-mls/f23-2-3-0-todo-app-example
+  // so I put:
+  // base: '/f23-2-3-0-todo-app-example/'
+  base: '/your-repo-name-here/', 
 });
 ```
 
@@ -263,4 +393,16 @@ npm run preview
 
 ...which will serve the application at http://localhost:4173/
 
-Finally, **commit and push** your new compiled version to Github.
+Finally, **commit and push** your new compiled version to Github!
+
+## Publish on Github Pages
+
+Publishing your application on Github Pages is about as easy as it gets.
+
+1. Open the repo on Github.com
+2. Go to the <kbd>Settings</kbd> tab
+3. Find the <kbd>Pages</kbd> section
+4. Make sure that **Source** is **Deploy from a branch**
+5. Below, set **Branch** to `main` (or whatever branch you're using)
+6. Click **Save** and wait a few minutes! You should see the URL of your application.
+7. Each time you push a new commit to `main`, your page will redeploy!
