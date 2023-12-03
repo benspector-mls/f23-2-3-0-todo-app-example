@@ -6,22 +6,20 @@ const renderTodoCard = (todo) => {
   const todosList = document.querySelector("ul#todos-list");
   const li = document.createElement('li');
   const h3 = document.createElement('h3');
-  const label = document.createElement('label');
-  const deleteButton = document.createElement('button');
 
   li.dataset.uuid = todo.uuid;
   li.classList.add('todo-card');
   h3.textContent = todo.title;
 
-  label.innerHTML = `
-    Is Complete
-    <input type="checkbox" name="isComplete" ${todo.isComplete ? "checked" : ""}>
-  `
+  const labelInputButton = document.createElement('div');
+  labelInputButton.innerHTML = `
+    <label>
+      Complete
+      <input type="checkbox" name="isComplete" ${todo.isComplete ? "checked" : ""}>
+    </label>
+    <button class='delete-todo'>🗑️</button>`
 
-  deleteButton.textContent = 'delete';
-  deleteButton.classList.add('delete-todo')
-
-  li.append(h3, label, deleteButton);
+  li.append(h3, labelInputButton);
   todosList.append(li);
 }
 
@@ -34,15 +32,14 @@ const renderTodos = () => {
 
 const handleTodoChange = (e) => {
   if (!e.target.matches('input[type="checkbox"]')) return;
-  const uuid = e.target.parentElement.parentElement.dataset.uuid;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
   toggleTodoComplete(uuid);
   renderTodos();
 }
 
 const handleDeleteTodo = (e) => {
   if (!e.target.matches('button.delete-todo')) return;
-
-  const uuid = e.target.parentElement.dataset.uuid;
+  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
   deleteTodo(uuid);
   renderTodos();
 }
