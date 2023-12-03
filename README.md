@@ -2,7 +2,25 @@
 
 This README documents my process for building this simple Todo App using Vite. Use it like a tutorial if you would like.
 
-## Why Vite?
+<!-- vscode-markdown-toc -->
+* [Why Vite?](#WhyVite)
+* [Setup](#Setup)
+* [Planning Out The Data](#PlanningOutTheData)
+* [Creating a Data Layer for CRUD](#CreatingaDataLayerforCRUD)
+* [Rendering All Todos](#RenderingAllTodos)
+* [What's next?](#Whatsnext)
+* [Creating New Todos](#CreatingNewTodos)
+* [Deleting and Updating Todos](#DeletingandUpdatingTodos)
+* [Configure Vite for Deployment on Github Pages](#ConfigureViteforDeploymentonGithubPages)
+* [Publish on Github Pages](#PublishonGithubPages)
+
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+##  1. <a name='WhyVite'></a>Why Vite?
 
 Vite is a tool for developing web applications. It works by creating a **"development" version** of your project and provides a server for previewing and testing that version. In this "development" mode you can quickly iterate on the project and see the application **"hot reload"** without having to restart the server. 
 
@@ -12,7 +30,7 @@ Vite can be used for both simple and complex projects, from front-end only appli
 
 Sure, you could build a project from scratch where the "development" version and the "production" version are one-and-the-same. But tools like Vite provide many benefits which you'll learn to appreciate with time and experience.
 
-## Setup 
+##  2. <a name='Setup'></a>Setup 
 
 First, create a Github repository and clone it down.
 
@@ -66,7 +84,7 @@ You should be able to preview the application at http://localhost:5173/
 
 Once you've confirmed everything is connected, go ahead and **commit and push**.
 
-## Planning Out The Data
+##  3. <a name='PlanningOutTheData'></a>Planning Out The Data
 
 To start this project, I want to keep things simple. I want each of my todos to be an object with at minimum a unique id, a title, and a Boolean for marking the todo as complete or not. So something like this:
 
@@ -118,7 +136,7 @@ initialTodos.forEach((todo) => {
 });
 ```
 
-## Creating a Data Layer for CRUD
+##  4. <a name='CreatingaDataLayerforCRUD'></a>Creating a Data Layer for CRUD
 
 The `todos.json` file will just be the "seed" for our application's data. If we want to create, update, or delete todos, we'll use the user's `localStorage`.
 
@@ -186,7 +204,7 @@ main();
 
 Once I've confirmed that I can get all todos, create a new todo, update the todo, and delete it, I'll **commit and push** my progress.
 
-## Rendering All Todos
+##  5. <a name='RenderingAllTodos'></a>Rendering All Todos
 
 Now that I can manage the todos using `localStorage`, I can start building out the UI.
 
@@ -236,7 +254,7 @@ Use `npm run dev` to preview the application, using the Chrome Developer Console
 
 At this point, you should see the todos displayed with the structure above and you can take some time to style them.
 
-## What's next?
+##  6. <a name='Whatsnext'></a>What's next?
 
 Okay! So our application can show todos fetched from `localStorage`. You can choose to implement each of the remaining features in whatever order you choose. 
 
@@ -244,7 +262,7 @@ I'm going to work on creating todos next. That way, when I implement updating an
 
 > 💡 **tip**: You can reset `localStorage` with `localStorage.clear()`
 
-## Creating New Todos
+##  7. <a name='CreatingNewTodos'></a>Creating New Todos
 
 To make the simplest todo, we just need a form with a single text input for the title of the todo. 
 
@@ -302,7 +320,7 @@ const main = () => {
 
 Remember to re-render the todos using your `renderTodos` helper function after adding the new todo!
 
-## Deleting and Updating Todos
+##  8. <a name='DeletingandUpdatingTodos'></a>Deleting and Updating Todos
 
 To handle deleting and updating todos, we want to detect `input` change events on the checkboxes and `click` events on the delete buttons inside of each `li.todo-card`.
 
@@ -346,7 +364,7 @@ const main = () => {
 
 This is where having the `uuid` as a data attribute on each todo `li` comes in handy! Whenever a checkbox or button is clicked, we can check the `li` parent element and get the `dataset.uuid` value from it. Then, we can easily feed it to our data layer helper functions before re-rendering.
 
-## Configure Vite for Deployment on Github Pages
+##  9. <a name='ConfigureViteforDeploymentonGithubPages'></a>Configure Vite for Deployment on Github Pages
 
 And that's it!!
 
@@ -395,7 +413,7 @@ npm run preview
 
 Finally, **commit and push** your new compiled version to Github!
 
-## Publish on Github Pages
+##  10. <a name='PublishonGithubPages'></a>Publish on Github Pages
 
 Publishing your application on Github Pages is about as easy as it gets.
 
