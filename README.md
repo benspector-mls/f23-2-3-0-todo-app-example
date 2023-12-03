@@ -204,6 +204,8 @@ main();
 
 Once I've confirmed that I can get all todos, create a new todo, update the todo, and delete it, I'll **commit and push** my progress.
 
+> 🚀 **Complete Code:** see the complete [`data-layer-utils.js` file here](./app/src/data-layer-utils.js)
+
 ##  5. <a name='RenderingAllTodos'></a>Rendering All Todos
 
 Now that I can manage the todos using `localStorage`, I can start building out the UI.
@@ -253,6 +255,8 @@ const main = () => {
 Use `npm run dev` to preview the application, using the Chrome Developer Console to debug.
 
 At this point, you should see the todos displayed with the structure above and you can take some time to style them.
+
+> 🚀 **Complete Code:** see the complete [`main.js` file here](./app/src/main.js)
 
 ##  6. <a name='Whatsnext'></a>What's next?
 
@@ -320,6 +324,10 @@ const main = () => {
 
 Remember to re-render the todos using your `renderTodos` helper function after adding the new todo!
 
+> 🚀 **Complete Code:** see the complete [`main.js` file here](./app/src/main.js)
+> 
+> 🚀 **Complete Code:** see the complete [`index.html` file here](./app/index.html)
+
 ##  8. <a name='DeletingandUpdatingTodos'></a>Deleting and Updating Todos
 
 To handle deleting and updating todos, we want to detect `input` change events on the checkboxes and `click` events on the delete buttons inside of each `li.todo-card`.
@@ -336,20 +344,10 @@ const renderTodos = () => { /* ... */ };
 const handleNewTodo = (e) => { /* ... */ };
 
 // a delegation event handler for the checkbox inputs
-const handleTodoChange = (e) => {
-  if (!e.target.matches('input[type="checkbox"]')) return;
-  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
-  toggleTodoComplete(uuid);
-  renderTodos();
-};
+const handleTodoChange = (e) => { /* ... */ }
 
 // a delegation event handler for the delete buttons
-const handleDeleteTodo = (e) => {
-  if (!e.target.matches('button.delete-todo')) return;
-  const uuid = e.target.closest('#todos-list>li').dataset.uuid;
-  deleteTodo(uuid);
-  renderTodos();
-};
+const handleDeleteTodo = (e) => { /* ... */ };
 
 const main = () => {
   initializeTodosIfEmpty();
@@ -363,6 +361,8 @@ const main = () => {
 ```
 
 This is where having the `uuid` as a data attribute on each todo `li` comes in handy! Whenever a checkbox or button is clicked, we can check the `li` parent element and get the `dataset.uuid` value from it. Then, we can easily feed it to our data layer helper functions before re-rendering.
+
+> 🚀 **Complete Code:** see the complete [`main.js` file here](./app/src/main.js)
 
 ##  9. <a name='ConfigureViteforDeploymentonGithubPages'></a>Configure Vite for Deployment on Github Pages
 
