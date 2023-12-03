@@ -7,7 +7,6 @@ import initialTodos from './todos.json';
 // sets a new key-value pair in local storage.
 const setLocalStorageKey = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-
 // tries to get a value from local storage.
 const getLocalStorageKey = (key) => {
   try {
@@ -16,7 +15,7 @@ const getLocalStorageKey = (key) => {
     console.error(error);
     return null;
   }
-}
+};
 
 ///////////////////////
 // Todo List Helpers //

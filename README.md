@@ -6,6 +6,7 @@ This README documents my process for building this simple Todo App using Vite. U
 * [Why Vite?](#WhyVite)
 * [Setup](#Setup)
 * [Planning Out The Data](#PlanningOutTheData)
+* [Local Storage](#LocalStorage)
 * [Creating a Data Layer for CRUD](#CreatingaDataLayerforCRUD)
 * [Rendering All Todos](#RenderingAllTodos)
 * [What's next?](#Whatsnext)
@@ -20,7 +21,7 @@ This README documents my process for building this simple Todo App using Vite. U
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-##  1. <a name='WhyVite'></a>Why Vite?
+## <a name='WhyVite'></a>Why Vite?
 
 Vite is a tool for developing web applications. It works by creating a **"development" version** of your project and provides a server for previewing and testing that version. In this "development" mode you can quickly iterate on the project and see the application **"hot reload"** without having to restart the server. 
 
@@ -30,7 +31,7 @@ Vite can be used for both simple and complex projects, from front-end only appli
 
 Sure, you could build a project from scratch where the "development" version and the "production" version are one-and-the-same. But tools like Vite provide many benefits which you'll learn to appreciate with time and experience.
 
-##  2. <a name='Setup'></a>Setup 
+## <a name='Setup'></a>Setup 
 
 First, create a Github repository and clone it down.
 
@@ -84,7 +85,7 @@ You should be able to preview the application at http://localhost:5173/
 
 Once you've confirmed everything is connected, go ahead and **commit and push**.
 
-##  3. <a name='PlanningOutTheData'></a>Planning Out The Data
+## <a name='PlanningOutTheData'></a>Planning Out The Data
 
 To start this project, I want to keep things simple. I want each of my todos to be an object with at minimum a unique id, a title, and a Boolean for marking the todo as complete or not. So something like this:
 
@@ -136,9 +137,54 @@ initialTodos.forEach((todo) => {
 });
 ```
 
-##  4. <a name='CreatingaDataLayerforCRUD'></a>Creating a Data Layer for CRUD
+## <a name='LocalStorage'></a>Local Storage
 
-The `todos.json` file will just be the "seed" for our application's data. If we want to create, update, or delete todos, we'll use the user's `localStorage`.
+The `todos.json` file will just be the "seed" for our application's data. If we want to create, update, or delete todos, we'll use the user's [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem).
+
+`localStorage` is a built-in API (you don't need to import anything) for storing data in the user's browser's memory. When data is stored in `localStorage`, it will stay there, even if the page is reloaded or the tab is closed. 
+
+There are two primary functions to use when dealing with `localStorage`:
+1. `localStorage.setItem('key', value)`
+2. `localStorage.getItem('key')`
+
+```js
+const person = { name: "Alex" };
+localStorage.setItem("user", person);
+console.log(localStorage.getItem("user")); // "[object Object]"; not useful!
+```
+
+Note: **`localStorage` only supports storing strings** so, in the example above, the `person` Object is turned into a string before being stored. When we retrieve it, it is still a string.
+
+To properly store and retrieve Objects/Arrays, we should **stringify** and **parse** the values.
+
+```js
+const person = { name: "Alex" };
+localStorage.setItem("user", JSON.stringify(person));
+console.log(JSON.parse(localStorage.getItem("user"))); // { name: "Alex" }
+```
+
+So, to help us deal with this easily, we can create these handy helper functions:
+
+```js
+// sets a new key-value pair in local storage.
+const setLocalStorageKey = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+
+// tries to get a value from local storage.
+const getLocalStorageKey = (key) => {
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+const names = ['alice', 'bryan', 'charlotte'];
+setLocalStorageKey('names', names);
+console.log(getLocalStorageKey('names')); // ['alice', 'bryan', 'charlotte']
+```
+
+## <a name='CreatingaDataLayerforCRUD'></a>Creating a Data Layer for CRUD
 
 To keep things organized, I'll create a separate file called `data-layer-utils.js` with the following functions:
 
@@ -206,7 +252,7 @@ Once I've confirmed that I can get all todos, create a new todo, update the todo
 
 > 🚀 **Complete Code:** see the complete [`data-layer-utils.js` file here](./app/src/data-layer-utils.js)
 
-##  5. <a name='RenderingAllTodos'></a>Rendering All Todos
+## <a name='RenderingAllTodos'></a>Rendering All Todos
 
 Now that I can manage the todos using `localStorage`, I can start building out the UI.
 
@@ -258,7 +304,7 @@ At this point, you should see the todos displayed with the structure above and y
 
 > 🚀 **Complete Code:** see the complete [`main.js` file here](./app/src/main.js)
 
-##  6. <a name='Whatsnext'></a>What's next?
+## <a name='Whatsnext'></a>What's next?
 
 Okay! So our application can show todos fetched from `localStorage`. You can choose to implement each of the remaining features in whatever order you choose. 
 
@@ -266,7 +312,7 @@ I'm going to work on creating todos next. That way, when I implement updating an
 
 > 💡 **tip**: You can reset `localStorage` with `localStorage.clear()`
 
-##  7. <a name='CreatingNewTodos'></a>Creating New Todos
+## <a name='CreatingNewTodos'></a>Creating New Todos
 
 To make the simplest todo, we just need a form with a single text input for the title of the todo. 
 
@@ -328,7 +374,7 @@ Remember to re-render the todos using your `renderTodos` helper function after a
 > 
 > 🚀 **Complete Code:** see the complete [`index.html` file here](./app/index.html)
 
-##  8. <a name='DeletingandUpdatingTodos'></a>Deleting and Updating Todos
+## <a name='DeletingandUpdatingTodos'></a>Deleting and Updating Todos
 
 To handle deleting and updating todos, we want to detect `input` change events on the checkboxes and `click` events on the delete buttons inside of each `li.todo-card`.
 
@@ -364,7 +410,7 @@ This is where having the `uuid` as a data attribute on each todo `li` comes in h
 
 > 🚀 **Complete Code:** see the complete [`main.js` file here](./app/src/main.js)
 
-##  9. <a name='ConfigureViteforDeploymentonGithubPages'></a>Configure Vite for Deployment on Github Pages
+## <a name='ConfigureViteforDeploymentonGithubPages'></a>Configure Vite for Deployment on Github Pages
 
 And that's it!!
 
@@ -413,7 +459,7 @@ npm run preview
 
 Finally, **commit and push** your new compiled version to Github!
 
-##  10. <a name='PublishonGithubPages'></a>Publish on Github Pages
+## <a name='PublishonGithubPages'></a>Publish on Github Pages
 
 Publishing your application on Github Pages is about as easy as it gets.
 
