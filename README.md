@@ -35,7 +35,7 @@ npm i
 npm i uuid
 ```
 
-Clean up the directory by removing the `counter.js` and `javascript.svg` files and moving the `main.js` and `style.css` files into a `src` directory.
+Clean up the directory by removing some of the provided code. Delete the `counter.js` and `javascript.svg` files and move the `main.js` and `style.css` files into a `src` directory.
 
 ```sh
 rm counter.js javascript.svg
@@ -150,9 +150,9 @@ const getLocalStorageKey = (key) => {
 // Todo List Helpers //
 ///////////////////////
 
-// stores todos the todos.json file in localStorage, but only if localStorage doesn't have them already
-export const initializeTodosIfEmpty = () => {}
-// returns the Array of all todo Objects
+// sets the todos Array in localStorage with the key 'todos'
+export const setTodos = (todos) => {}
+// returns the Array of all todo Objects from localStorage
 export const getAllTodos = () => {} 
 // adds a new todo Object to the Array of todos in localStorage
 export const addTodo = (todo) => { } 
@@ -160,6 +160,8 @@ export const addTodo = (todo) => { }
 export const updateTodo = (uuid, todo) => { } 
 // finds a todo by uuid and removes it from the Array of todos
 export const deleteTodo = (uuid) => { } 
+// stores todos from the todos.json file in localStorage, but only if localStorage doesn't have them already
+export const initializeTodosIfEmpty = () => {}
 ```
 
 Once I complete these functions, I'll import them into `main.js` and test them out:
