@@ -69,6 +69,11 @@ button {
   gap: 5rem;
 }
 
+.label-input-container {
+  display: inline-flex;
+  gap: .25rem;
+}
+
 .delete-todo {
   margin-left: 1rem;
   background: white;

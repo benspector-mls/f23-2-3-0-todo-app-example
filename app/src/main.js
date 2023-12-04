@@ -13,21 +13,18 @@ const renderTodoCard = (todo) => {
 
   const labelInputButton = document.createElement('div');
   labelInputButton.innerHTML = `
-    <label>
-      Complete
+    <div class='label-input-container'>
+      <label>Complete</label>
       <input type="checkbox" name="isComplete" ${todo.isComplete ? "checked" : ""}>
-    </label>
-    <button class='delete-todo'>🗑️</button>`
-
+    </div>
+    <button class='delete-todo'>🗑️</button>`;
   li.append(h3, labelInputButton);
   todosList.append(li);
 };
 
 const renderTodos = () => {
-  const ul = document.querySelector("ul#todos-list");
-  ul.innerHTML = "";
-  const todos = getAllTodos();
-  todos.forEach((todo) => renderTodoCard(todo));
+  document.querySelector("ul#todos-list").innerHTML = "";
+  getAllTodos().forEach(renderTodoCard);
 };
 
 const handleTodoChange = (e) => {
