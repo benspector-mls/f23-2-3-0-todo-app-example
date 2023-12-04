@@ -2,26 +2,26 @@
 
 This README documents my process for building this simple Todo App using Vite. Use it like a tutorial if you would like.
 
-<!-- vscode-markdown-toc -->
-* [Why Vite?](#WhyVite)
-* [Setup](#Setup)
-* [Planning Out The Data](#PlanningOutTheData)
-* [Local Storage](#LocalStorage)
-* [Creating a Data Layer for CRUD](#CreatingaDataLayerforCRUD)
-* [Rendering All Todos](#RenderingAllTodos)
-* [What's next?](#Whatsnext)
-* [Creating New Todos](#CreatingNewTodos)
-* [Deleting and Updating Todos](#DeletingandUpdatingTodos)
-* [Configure Vite for Deployment on Github Pages](#ConfigureViteforDeploymentonGithubPages)
-* [Publish on Github Pages](#PublishonGithubPages)
+<!-- TOC -->
 
-<!-- vscode-markdown-toc-config
-	numbering=false
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [Vite](#vite)
+  - [What is Vite?](#what-is-vite)
+  - [Why Use Vite?](#why-use-vite)
+- [Setup](#setup)
+- [Clean Up The Repo](#clean-up-the-repo)
+- [Planning Out The Data](#planning-out-the-data)
+- [Creating New Todos](#creating-new-todos)
+- [Local Storage](#local-storage)
+- [Creating a Data Layer for CRUD](#creating-a-data-layer-for-crud)
+- [Connecting the Form with the Data Layer](#connecting-the-form-with-the-data-layer)
+- [Rendering All Todos](#rendering-all-todos)
+- [Deleting and Updating Todos](#deleting-and-updating-todos)
+- [Configure Vite for Deployment on Github Pages](#configure-vite-for-deployment-on-github-pages)
+- [Publish on Github Pages](#publish-on-github-pages)
 
-## <a name='WhyVite'></a>Vite?
+<!-- /TOC -->
+
+## Vite
 
 **Objective(s)**: Learn key terms used when discussing Vite. 
 
@@ -39,7 +39,7 @@ Sure, you could build a project from scratch and manage your own "development" v
 
 **Vite is also quite versaitle**. It can be used for both simple and complex projects, from front-end only applications that use nothing but Vanilla JS to robust full-stack applications using frameworks like React.
 
-## <a name='Setup'></a>Setup 
+## Setup
 
 **Objective(s)**: Create a Github repo and the project starter code using Vite
 
@@ -102,7 +102,7 @@ Once you've confirmed everything is connected, go ahead and **commit and push**.
 > 💡 **Tip**: You don't need to stop and start you Vite Development Server because it has "hot reloading". If you ever need to run it again though, use the command `npm run dev`
 
 
-## <a name='PlanningOutTheData'></a>Planning Out The Data
+## Planning Out The Data
 
 **Objective(s)**: Decide on a structure for the todo data and make a starting data set (called a "seed")
 
@@ -156,7 +156,7 @@ initialTodos.forEach((todo) => {
 });
 ```
 
-## <a name='CreatingNewTodos'></a>Creating New Todos
+## Creating New Todos
 
 **Objective**: Make a form that let's the user create new todos!
 
@@ -236,7 +236,7 @@ Once again, return to http://localhost:5173 and test out your form with the Chro
 
 Once you've confirmed that you can create new todo Objects, **commit and push** your progress!
 
-## <a name='LocalStorage'></a>Local Storage
+## Local Storage
 
 **Objective(s)**: Understand what `localStorage` is and how it works
 
@@ -287,7 +287,7 @@ console.log(getLocalStorageKey('names')); // ['alice', 'bryan', 'charlotte']
 
 Try copy-pasting that code into `main.js` and see what happens in your Chrome Developer Console!
 
-## <a name='CreatingaDataLayerforCRUD'></a>Creating a Data Layer for CRUD
+## Creating a Data Layer for CRUD
 
 **Objective(s)**: Create functions for interacting with `localStorage` in a controlled and predictable manner, and make those functions available by exporting them
 
@@ -405,7 +405,7 @@ const main = () => {
 };
 ```
 
-## <a name='RenderingAllTodos'></a>Rendering All Todos
+## Rendering All Todos
 
 **Objective(s)**: Render all todos in `localStorage` as a list. When new todos are added, they appear as well. 
 
@@ -480,7 +480,7 @@ Use `npm run dev` to preview the application, using the Chrome Developer Console
 
 At this point, you should see the todos displayed with the structure above and you can take some time to style them.
 
-## <a name='DeletingandUpdatingTodos'></a>Deleting and Updating Todos
+## Deleting and Updating Todos
 
 **Objective(s)**: Handle users toggling todos as complete. Handle users deleting a todo.
 
@@ -526,7 +526,7 @@ This is where having the `uuid` as a data attribute on each todo `li` comes in h
 
 </details><br>
 
-## <a name='ConfigureViteforDeploymentonGithubPages'></a>Configure Vite for Deployment on Github Pages
+## Configure Vite for Deployment on Github Pages
 
 **Objective(s)**: Prepare for deployment and build the production version of the app.
 
@@ -577,7 +577,7 @@ npm run preview
 
 Finally, **commit and push** your new compiled version to Github!
 
-## <a name='PublishonGithubPages'></a>Publish on Github Pages
+## Publish on Github Pages
 
 **Objective(s)**: Publish your web app!
 
