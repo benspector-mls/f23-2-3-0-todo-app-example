@@ -32,7 +32,7 @@ Vite is a tool for developing web applications. It helps developers by creating 
 When it is time to **deploy** your project, it can **compile** the project into a **production version** of the project. The production version can easily be deployed on a third-party **hosting service**, like Github Pages or Render,
 
 > For basic front-end only applications, we'll use **Github Pages**. Eventually we'll use a more robust hosting service like Render which can provide a full back-end server and a database server.
-> 
+
 ### Why Use Vite?
 
 Sure, you could build a project from scratch and manage your own "development" version and the "production" version. But **Vite is "lightweight"** (it doesn't slow down your process by using it) and the production version of your application will be **optimized for speed**.
@@ -42,6 +42,8 @@ Sure, you could build a project from scratch and manage your own "development" v
 ## Setup
 
 **Objective(s)**: Create a Github repo and the project starter code using Vite
+
+**Time to Code!**
 
 First, create a Github repository and clone it down.
 
@@ -72,6 +74,8 @@ At this point, you should be able to open up http://localhost:5173 to view the a
 
 **Objective(s)**: remove unwanted code from the provided files and organizee all code into a src/ directory
 
+**Time to Code!**
+
 Clean up the directory by removing some of the provided code. Delete the `counter.js` and `javascript.svg` files and move the `main.js` and `style.css` files into a `src` directory.
 
 ```sh
@@ -87,6 +91,8 @@ Edit the provided starter code:
 * Empty out the `main.js` file (keep the `import './style.css'` line)
 * Empty out the `style.css` file, keeping the styles you want to keep (I like to keep `:root`, `body`, `h1`, and `#app` styles but its up to you — you can start fresh).
 * Edit the `<script>` tag `index.html` (line 11) so that it references the new location of `main.js`
+
+**Test**:
 
 To test that everything works, add some code to your `main.js` file...
 
@@ -115,6 +121,8 @@ To start this project, I want to keep things simple. I want each of my todos to 
   isComplete: false
 }
 ```
+
+**Time to Code!**
 
 It is often helpful to create some starter data that can be shown to the user when the application first loads. So I'll create a `todos.json` file in the `src/` directory with an Array of these Objects that can be loaded by the application:
 
@@ -174,6 +182,7 @@ const todo = {
 
 To make these todo Objects, the user provides the `title` only. We can generate the `uuid` for them, and the `isComplete` property we can just assume is `false` to start with.
 
+**Time to Code!**
 
 So, we need a form with a single text input for the title of the todo. Don't forget that every form needs:
 * An `aria-label`
@@ -232,6 +241,8 @@ const main = () => {
 
 </details><br>
 
+**Test**
+
 Once again, return to http://localhost:5173 and test out your form with the Chrome Developer Console open!
 
 Once you've confirmed that you can create new todo Objects, **commit and push** your progress!
@@ -264,6 +275,8 @@ localStorage.setItem("user", JSON.stringify(person));
 console.log(JSON.parse(localStorage.getItem("user"))); // { name: "Alex" }
 ```
 
+**Time to Code!**
+
 So, to help us deal with this easily, we can create these handy helper functions:
 
 ```js
@@ -290,6 +303,8 @@ Try copy-pasting that code into `main.js` and see what happens in your Chrome De
 ## Creating a Data Layer for CRUD
 
 **Objective(s)**: Create functions for interacting with `localStorage` in a controlled and predictable manner, and make those functions available by exporting them
+
+**Time to Code!**
 
 To keep things organized, I'll create a separate file called `data-layer-utils.js` in the `app` directory with the following functions (remember to export them as named exports!):
 
@@ -337,6 +352,8 @@ export const initializeTodosIfEmpty = () => {}
 
 > 🚀 **Complete Code**: see the complete [`data-layer-utils.js` file here](./app/src/data-layer-utils.js)
 
+**Test**
+
 Once I complete these functions, I'll import them into `main.js` and test them out:
 
 ```js
@@ -375,6 +392,8 @@ Once I've confirmed that I can get all todos, create a new todo, update the todo
 ## Connecting the Form with the Data Layer
 
 **Objective(s)**: Use the form to add new todo Object to `localStorage`
+
+**Time to Code!**
 
 Remember how our form is just printing out the new todo Object, but isn't doing anything else with it? 
 
@@ -426,12 +445,14 @@ When rendering the todos, I want them to be in a list and each have this HTML st
 
 Note how the `li` element has the `uuid` value of the todo as a `data-uuid` attribute! This will come in handy later when we want to delete / update specific todo items.
 
+**Time to Code!**
+
 To achieve this in an organized fashion, in `main.js` I will create two new functions
 1. `renderTodoCard(todo)` for rendering a single todo "card". Make sure that it matches the structure above!
 2. `renderTodos()` for getting the list of todos and rendering each todo.
 
 You'll also want to:
-* create a `section` to with a `ul` in `index.html` to display your todos
+* create a `section` with a `ul` in `index.html` to display your todos
 * empty out the `innerHTML` of that `ul` each time you invoke `renderTodos()`
 * invoke `renderTodos()` after adding a new todo in the `'submit'` event handler.
 
@@ -476,6 +497,8 @@ const main = () => {
 
 </details><br>
 
+**Test**
+
 Use `npm run dev` to preview the application, using the Chrome Developer Console to debug.
 
 At this point, you should see the todos displayed with the structure above and you can take some time to style them.
@@ -486,7 +509,9 @@ At this point, you should see the todos displayed with the structure above and y
 
 To handle deleting and updating todos, we want to detect `'input'` events on the checkboxes and `'click'` events on the delete buttons inside of each `li.todo-card`.
 
-To avoid creating a new event listener on each `li.todo-card`, we'll take advantage of **propagation** and create two **delegation event handlers** on the `ul#todos-list`, one for updating and one for deleting.
+**Time to Code!**
+
+Create two **delegation event handlers** on the `ul#todos-list`, one for updating and one for deleting. We'll put these listeners on the list itself to avoid creating a new event listener on each `li.todo-card`, taking advantage of **propagation**.
 
 The structure of each delegation event handler should be roughly the same:
 * check to see if the target is what it should be
@@ -526,6 +551,10 @@ This is where having the `uuid` as a data attribute on each todo `li` comes in h
 
 </details><br>
 
+**Test**
+
+Remember to test out your functionality! See if you updating and deleting todos persists in `localStorage` by closing and re-opening the tab. You should see the changes you make persist.
+
 ## Configure Vite for Deployment on Github Pages
 
 **Objective(s)**: Prepare for deployment and build the production version of the app.
@@ -535,6 +564,8 @@ Congrats! The app is built! We can run it locally, but wouldn't it be sweet if e
 Do some final testing and styling on the development server and then we get get this thing published!
 
 Before we can publish the Github pages, we want to make the **production version** of the application. Before we do that, we'll need to configure Vite to create that version in the right location.
+
+**Time to Code**:
 
 Create a Vite configuration file
 
@@ -566,6 +597,8 @@ npm run build
 ```
 
 This will **compile** the code you've written in your `app/` folder into optimized static files that can quickly be served by Github pages. It will put those files in the root directory of your repo, where Github expects to find an `index.html` file and any associated assets.
+
+**Test**
 
 You can see what this "deployed" version will look like by running the command...
 
