@@ -2,6 +2,8 @@
 
 This README documents my process for building this simple Todo App using Vite. Use it like a tutorial if you would like.
 
+The repo itself contains all of the final solution code. **I do NOT recommend that you clone/fork this repo**. Instead, use it as a reference as you create your own repository.
+
 <!-- TOC -->
 
 - [Vite](#vite)
